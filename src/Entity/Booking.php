@@ -29,15 +29,16 @@ class Booking
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $created_at = null;
 
-    #[ORM\ManyToOne(inversedBy: 'room')]
+    #[ORM\ManyToOne(inversedBy: 'bookings')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $guest = null;
+    private ?User $traveler = null;
 
-    #[ORM\ManyToOne(inversedBy: 'booking')]
-    private ?Room $room = null;
-
-    #[ORM\OneToOne(inversedBy: 'booking', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Review $review = null;
+
+    #[ORM\ManyToOne(inversedBy: 'bookings')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Room $room = null;
 
     public function getId(): ?int
     {
@@ -104,26 +105,14 @@ class Booking
         return $this;
     }
 
-    public function getGuest(): ?User
+    public function getTraveler(): ?User
     {
-        return $this->guest;
+        return $this->traveler;
     }
 
-    public function setGuest(?User $guest): static
+    public function setTraveler(?User $traveler): static
     {
-        $this->guest = $guest;
-
-        return $this;
-    }
-
-    public function getRoom(): ?Room
-    {
-        return $this->room;
-    }
-
-    public function setRoom(?Room $room): static
-    {
-        $this->room = $room;
+        $this->traveler = $traveler;
 
         return $this;
     }
@@ -136,6 +125,18 @@ class Booking
     public function setReview(?Review $review): static
     {
         $this->review = $review;
+
+        return $this;
+    }
+
+    public function getRoom(): ?Room
+    {
+        return $this->room;
+    }
+
+    public function setRoom(?Room $room): static
+    {
+        $this->room = $room;
 
         return $this;
     }

@@ -25,17 +25,14 @@ class Review
 
     #[ORM\ManyToOne(inversedBy: 'reviews')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $guest = null;
+    private ?User $traveler = null;
 
-    #[ORM\ManyToOne(inversedBy: 'create_at')]
+    #[ORM\ManyToOne(inversedBy: 'reviews')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Room $rooms = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $create_at = null;
-
-    #[ORM\OneToOne(mappedBy: 'review', cascade: ['persist', 'remove'])]
-    private ?Booking $booking = null;
+    private ?\DateTimeInterface $created_at = null;
 
     public function getId(): ?int
     {
@@ -78,14 +75,14 @@ class Review
         return $this;
     }
 
-    public function getGuest(): ?User
+    public function getTraveler(): ?User
     {
-        return $this->guest;
+        return $this->traveler;
     }
 
-    public function setGuest(?User $guest): static
+    public function setTraveler(?User $traveler): static
     {
-        $this->guest = $guest;
+        $this->traveler = $traveler;
 
         return $this;
     }
@@ -102,36 +99,14 @@ class Review
         return $this;
     }
 
-    public function getCreateAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->create_at;
+        return $this->created_at;
     }
 
-    public function setCreateAt(\DateTimeInterface $create_at): static
+    public function setCreatedAt(\DateTimeInterface $created_at): static
     {
-        $this->create_at = $create_at;
-
-        return $this;
-    }
-
-    public function getBooking(): ?Booking
-    {
-        return $this->booking;
-    }
-
-    public function setBooking(?Booking $booking): static
-    {
-        // unset the owning side of the relation if necessary
-        if ($booking === null && $this->booking !== null) {
-            $this->booking->setReview(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($booking !== null && $booking->getReview() !== $this) {
-            $booking->setReview($this);
-        }
-
-        $this->booking = $booking;
+        $this->created_at = $created_at;
 
         return $this;
     }
