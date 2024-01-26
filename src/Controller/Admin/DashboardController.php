@@ -43,18 +43,39 @@ class DashboardController extends AbstractDashboardController
         return Dashboard::new()
              ->setTitle('<img src="/images/icon.svg" width="50" ')
              ->setFaviconPath('/images/icon.svg')
-             
+    
              ;
     }
 
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('Rooms', 'fas fa-list', Room::class);
-        yield MenuItem::linkToCrud('Users', 'fas fa-list', User::class);
-        yield MenuItem::linkToCrud('Booking', 'fas fa-list', Booking::class);
-        yield MenuItem::linkToCrud('favorites', 'fas fa-list', Favorite::class);
-        yield MenuItem::linkToCrud('Reviews', 'fas fa-list', Review::class);
-        yield MenuItem::linkToCrud('Equipements', 'fas fa-list', Equipment::class);
+        yield MenuItem::linkToCrud('Rooms', 'fas fa-cubes', Room::class);
+        yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-users', User::class);
+        yield MenuItem::linkToCrud('Réservations', 'fas fa-list', Booking::class);
+        yield MenuItem::linkToCrud('favories', 'fas fa-star', Favorite::class);
+        yield MenuItem::linkToCrud('Avis', 'fas fa-list', Review::class);
+        yield MenuItem::linkToCrud('Equipements', 'fas fa-tools', Equipment::class);
+        yield MenuItem::linkToRoute('Retour à l\'App', 'fas fa-arrow-left', 'app_room');
     }
+    
+    // public function configureUserMenu(UserInterface $user): UserMenu
+    // {
+    //     // Usually it's better to call the parent method because that gives you a
+    //     // user menu with some menu items already created ("sign out", "exit impersonation", etc.)
+    //     // if you prefer to create the user menu from scratch, use: return UserMenu::new()->...
+    //     return parent::configureUserMenu($user)
+    //         // use the given $user object to get the user name
+    //         ->setName($user->getFullname())
+    //         // use this method if you don't want to display the name of the user
+    //         ->displayUserName(false)
+
+    //         // you can return an URL with the avatar image
+    //         ->setAvatarUrl('/uploads/users/'. $user->getImage())
+            
+    //         ->addMenuItems([
+    //             MenuItem::linkToLogout('Logout', 'fa fa-sign-out'),
+    //         ]);
+    // }
+
 }

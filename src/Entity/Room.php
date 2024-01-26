@@ -317,4 +317,9 @@ class Room
         return false;
         // return $this->favorites->exists(fn (int $key, Favorite $favorite) => $favorite->getTraveler() === $user);
     }
+
+    public function __toString(): string
+    {
+        return $this->title;
+    }
 }
